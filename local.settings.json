@@ -5,10 +5,10 @@
     "FUNCTIONS_WORKER_RUNTIME": "python",
     "SCM_DO_BUILD_DURING_DEPLOYMENT":"true",
     "ENABLE_ORYX_BUILD":"true",
-    "AZURE_ACCOUNT_NAME": "",
-    "AZURE_CONTAINER_NAME": "",
-    "AZURE_SAS_TOKEN": "",
-    "AZURE_ENDPOINT": "",
-    "AZURE_SUBSCRIPTION_KEY": ""
+    "AZURE_ACCOUNT_NAME": "myblobstoragesa12345",
+    "AZURE_CONTAINER_NAME": "my-blob-container",
+    "AZURE_SAS_TOKEN": "sv=2024-11-04&ss=bfqt&srt=sco&sp=rwdlacupiytfx&se=2025-08-22T21:06:42Z&st=2025-08-22T12:51:42Z&spr=https&sig=N92zCHGEDbjcEUZaeXt8MJPWaSMyPLdl%2BBdFLODssTo%3D",
+    "AZURE_ENDPOINT": "https://southafricanorth.api.cognitive.microsoft.com",
+    "AZURE_SUBSCRIPTION_KEY": "a05a314610b24ed78565ca5d66bce381"
   }
 }
