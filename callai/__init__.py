@@ -96,7 +96,6 @@ logger.debug('Constructor:end')
 ################################################################################
 # constants
 ################################################################################
-wsurl = "http://localhost:1234/api/ocr"
 def main(req: func.HttpRequest) -> func.HttpResponse:
     ################################################################################
     logger.debug('--- Incoming request ---')
@@ -240,88 +239,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             mimetype="application/json"
         )
     ################################################################################
-    # azure document intelligence ocr  call
-    ################################################################################
-    # Prepare payload for stub OCR call
-    ocr_payload = {
-        "header": header,
-        "subject": subject,
-        "recipient": recipient,
-        "body": body,
-        "attachments": attachments if attachments is not None else []
-    }
-    try:
-        response = requests.post(wsurl, json=ocr_payload, timeout=10)
-        response.raise_for_status()
-    except requests.exceptions.MissingSchema:
-        resp = {
-            "status": "error",
-            "message": "Invalid URL provided."
-        }
-        logger.debug('--- Outgoing response ---')
-        logger.debug(json.dumps(resp))
-        return func.HttpResponse(
-            json.dumps(resp),
-            status_code=400,
-            mimetype="application/json"
-        )
-    except requests.exceptions.Timeout:
-        resp = {
-            "status": "error",
-            "message": "Request to the provided URL timed out."
-        }
-        logger.debug('--- Outgoing response ---')
-        logger.debug(json.dumps(resp))
-        return func.HttpResponse(
-            json.dumps(resp),
-            status_code=504,
-            mimetype="application/json"
-        )
-    except requests.exceptions.RequestException as e:
-        logger.error(f"Request failed: {e}")
-        resp = {
-            "status": "error",
-            "message": f"Failed to fetch the URL: {str(e)}"
-        }
-        logger.debug('--- Outgoing response ---')
-        logger.debug(json.dumps(resp))
-        return func.HttpResponse(
-            json.dumps(resp),
-            status_code=502,
-            mimetype="application/json"
-        )
-
-    # Check if OCR response is JSON
-    content_type = response.headers.get('Content-Type', '').lower().strip()
-    if not content_type.startswith('application/json'):
-        resp = {
-            "status": "error",
-            "message": f"Invalid content type from OCR service: {content_type}"
-        }
-        logger.debug('--- Outgoing response ---')
-        logger.debug(json.dumps(resp))
-        return func.HttpResponse(
-            json.dumps(resp),
-            status_code=502,
-            mimetype="application/json"
-        )
-    try:
-        ocr_result = response.json()
-    except Exception:
-        resp = {
-            "status": "error",
-            "message": "Failed to parse OCR service response as JSON."
-        }
-        logger.debug('--- Outgoing response ---')
-        logger.debug(json.dumps(resp))
-        return func.HttpResponse(
-            json.dumps(resp),
-            status_code=502,
-            mimetype="application/json"
-        )
-
-    ################################################################################
-    # call analyze functions
+    # call analyze function
     ################################################################################
     # If attachments exist, call analyze_document_stream with the first one as binary
     analyze_result = None
@@ -354,13 +272,12 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     resp = {
         "status": "success",
         "message": "Request processed successfully.",
-        "ocr_result": ocr_result,
         "analyze_result": analyze_result
     }
     logger.debug('--- Outgoing response ---')
     logger.debug(json.dumps(resp)[:4096])
     return func.HttpResponse(
         json.dumps(resp),
-        status_code=response.status_code,
+        status_code=200,
         mimetype="application/json"
     )

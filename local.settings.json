@@ -3,7 +3,9 @@
   "Values": {
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "FUNCTIONS_WORKER_RUNTIME": "python",
-    "AZURE_ACCOUNT_NAME": "qwer",
+    "SCM_DO_BUILD_DURING_DEPLOYMENT":"true",
+    "ENABLE_ORYX_BUILD":"true",
+    "AZURE_ACCOUNT_NAME": "",
     "AZURE_CONTAINER_NAME": "",
     "AZURE_SAS_TOKEN": "",
     "AZURE_ENDPOINT": "",
