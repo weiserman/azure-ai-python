@@ -3,6 +3,10 @@
   "Values": {
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "FUNCTIONS_WORKER_RUNTIME": "python",
-    "TEST_LOGGING": "1"
+    "AZURE_ACCOUNT_NAME": "",
+    "AZURE_CONTAINER_NAME": "",
+    "AZURE_SAS_TOKEN": "",
+    "AZURE_ENDPOINT": "",
+    "AZURE_SUBSCRIPTION_KEY": ""
   }
 }
